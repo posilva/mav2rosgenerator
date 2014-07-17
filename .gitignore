@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-build
-dist
-*.pyc
 =======
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -13,7 +9,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
-bin/
 build/
 develop-eggs/
 dist/
@@ -42,14 +37,6 @@ coverage.xml
 # Translations
 *.mo
 
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
-# Rope
-.ropeproject
-
 # Django stuff:
 *.log
 *.pot
@@ -57,4 +44,3 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
->>>>>>> c08a3637da1d078e30236ced15ab5b708b4f7839
