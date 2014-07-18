@@ -14,12 +14,15 @@ This is a python package that enable us to create a entire Mavlink API under ROS
 ```python
 
 from mav2ros.tools import *
-
-        definitions_file = '/home/posilva/ros_workspaces/roscon14_ws/libs/mavlink-1.0.11/message_definitions/v1.0/ardupilotmega.xml'
+        # mavlink definitions file 
+        definitions_file = '/home/posilva/libs/mavlink-1.0.11/message_definitions/v1.0/ardupilotmega.xml'
+        # where the rospackage will be generated 
         output_dir = '/home/posilva/ros_workspaces/roscon14_ws/src'
 
         generator = MAVGenerator( definitions_file, output_dir )
-        generator.generate(True,True);
+        with_node = True        # generate API code inside a node
+        with_mavlink = True     # invoke mavlink generator (mavgen.py) to generate mavlink headers
+        generator.generate(with_node, with_mavlink); 
 ```
 ## Future features
 
@@ -33,4 +36,14 @@ Example:
 With this design we can left outside of the generated API the type of connection used. We can create one node connected to a radio that publishes and subscribe
 this topics to received and send data to ROS.
 
+2. Create a configuration or semantic (up, down, both) in the direction of the mavlink messages to optimize callbacks and subscribers ( for UP, BOTH directions messages) and publishers (for DOWN direction)
+Maybe mavlink definition file can contain a message tag attribute with direction:
+
+<message id="11" name="SET_MODE" direction="UP">
+
+Example: 
+
+* HEARTBEAT message direction = BOTH
+* SET_MODE message direction = UP
+* GPS_RAW_INT message direction = down
 
