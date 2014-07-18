@@ -7,7 +7,7 @@ from distutils.core import setup
 
 setup(
     name='mav2rosgenerator',
-    version='0.1.2',
+    version='0.1.4',
     author='Pedro Marques da Silva',
     author_email='posilva@gmail.com',
     packages=['mav2ros', 'mav2ros.test'],
