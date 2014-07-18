@@ -28,19 +28,18 @@ from mav2ros.tools import *
 
 1. Create a ROS abstraction message/topic to provide a transparent way to send/receive data from the generated API
 
-Example:
+    Example:
 
-- Create a message MavlinkRawData (uint8 channel, uint8[] data)
-- Create two topics (/to_mav_raw_data, /from_mav_raw_data)
+    - Create a message MavlinkRawData (uint8 channel, uint8[] data)
+    - Create two topics (/to_mav_raw_data, /from_mav_raw_data)
 
-With this design we can left outside of the generated API the type of connection used. We can create one node connected to a radio that publishes and subscribe
-this topics to received and send data to ROS.
+    With this design we can left outside of the generated API the type of connection used. We can create one node connected to a radio that publishes and subscribe this topics to received and send data to ROS.
 
 2. Create a configuration or semantic (up, down, both) in the direction of the mavlink messages to optimize callbacks and subscribers ( for UP, BOTH directions messages) and publishers (for DOWN direction)
 Maybe mavlink definition file can contain a message tag attribute with direction:
-
-<message id="11" name="SET_MODE" direction="UP">
-
+```xml
+    <message id="11" name="SET_MODE" direction="UP">
+```
 Example: 
 
 * HEARTBEAT message direction = BOTH
