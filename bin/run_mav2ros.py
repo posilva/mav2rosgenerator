@@ -1,9 +1,10 @@
-#!/usr/local/bin/python2.7
+#!/usr/bin/python2.7
 # encoding: utf-8
-'''
-bin.run_mav2ros -- Execute Mavlink to ROS package generator
 
-bin.run_mav2ros is a Tool to execute Mavlink to ROS package generator
+'''
+run_mav2ros -- Execute Mavlink to ROS package generator
+
+:run_mav2ros is a Tool to execute Mavlink to ROS package generator
 
 It defines classes_and_methods
 
@@ -36,8 +37,10 @@ class CLIError(Exception):
     '''Generic exception to raise and log different fatal errors.'''
     def __init__(self, msg):
         super(CLIError).__init__(type(self))
-        self.msg = "E: %s" % msg
+        self.msg = "Error: %s" % msg
     def __str__(self):
+        return self.msg
+    def __repr__(self):
         return self.msg
     def __unicode__(self):
         return self.msg
@@ -72,9 +75,9 @@ USAGE
     try:
         # Setup argument parser
         parser = ArgumentParser(description=program_license, formatter_class=RawDescriptionHelpFormatter)
-        parser.add_argument("-v", "--verbose", dest="verbose", action="count", help="set verbosity level [default: %(default)s]")
-        parser.add_argument("-m", "--messages", dest="messages", help="Mavlink messages definition file . [default: %(default)s]", metavar="MESSAGE_DEFINITION_XML")
-        parser.add_argument("-o", "--output_dir", dest="output", help="Generation output base dir. ie. 'src' folder of a ROS workspace . [default: %(default)s]", metavar="OUTPUT_DIR" )
+        parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", help="set verbosity level ")
+        parser.add_argument("-m", "--messages", dest="messages", help="Mavlink messages definition file.", metavar="MESSAGE_DEFINITION_XML")
+        parser.add_argument("-o", "--output_dir", dest="output", help="Generation output base dir. ie. 'src' folder of a ROS workspace . ", metavar="OUTPUT_DIR" )
         parser.add_argument("--mavgen", dest="with_mavlink",action='store_true', help="Enable  mavlink generator 'mavgen.py'")
         parser.add_argument("--no-mavgen", dest="with_mavlink",action='store_false', help="Disable  mavlink generator 'mavgen.py'  [default: %(default)s]")
         parser.set_defaults(with_mavlink=True)
@@ -87,24 +90,28 @@ USAGE
         messages = args.messages
         output_dir = args.output
         with_mavlink = args.with_mavlink
-        
+ 
+        if output_dir is None:
+            output_dir=os.getcwd()
+
+        if messages is None:
+            raise CLIError("Missing definition file")        
+
+        if (not os.path.isfile(messages)):    
+            raise CLIError('Definition file missing ')
+
         if verbose > 0:
             print("Verbose mode on")
             print ("Definition File: " + messages)
             print ("Output dir: " + output_dir)
-                
-        if (not os.path.exists(messages)):    
-            CLIError("Definition file missing ")
-            
-        generator = MAVGenerator
+        
+        generator = MAVGenerator(messages,output_dir)
         generator.generate(True, with_mavlink)
         return 0
     except KeyboardInterrupt:
         ### handle keyboard interrupt ###
         return 0
     except Exception, e:
-        if DEBUG or TESTRUN:
-            raise(e)
         indent = len(program_name) * " "
         sys.stderr.write(program_name + ": " + repr(e) + "\n")
         sys.stderr.write(indent + "  for help use --help")
@@ -118,10 +125,11 @@ if __name__ == "__main__":
     if TESTRUN:
         import doctest
         doctest.testmod()
+
     if PROFILE:
         import cProfile
         import pstats
-        profile_filename = 'bin.run_mav2ros_profile.txt'
+        profile_filename = 'run_mav2ros_profile.txt'
         cProfile.run('main()', profile_filename)
         statsfile = open("profile_stats.txt", "wb")
         p = pstats.Stats(profile_filename, stream=statsfile)
@@ -129,4 +137,6 @@ if __name__ == "__main__":
         stats.print_stats()
         statsfile.close()
         sys.exit(0)
+    
     sys.exit(main())
+    
