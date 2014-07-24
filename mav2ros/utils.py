@@ -10,9 +10,9 @@ def get_timestamp():
     return datetime.datetime.utcnow()
 
 def generate_pkg_name(name):
-    return "mavlink_" + name + "_msgs"
+    return "mavlink_" + name + ""
 
-def generate_file(filename,content):
+def generate_file(filename, content):
     #===========================================================================
     # write a file to disk
     #===========================================================================
