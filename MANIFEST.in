@@ -1,2 +1,2 @@
-include *.txt *.md
-recursive-include docs *.txt *.md
+include *.txt *.md *.py
+recursive-include bin docs *.txt *.md

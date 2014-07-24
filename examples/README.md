@@ -1,0 +1,1 @@
+# This is a rospackage example to read and write from a ardupilot radio serial device

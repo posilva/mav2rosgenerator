@@ -3,7 +3,7 @@ CHANGES.txt
 LICENSE.txt
 README.md
 setup.py
-docs/help.txt
+bin/run_mav2ros.py
 mav2ros/__init__.py
 mav2ros/model.py
 mav2ros/templates.py

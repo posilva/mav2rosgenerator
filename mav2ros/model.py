@@ -18,16 +18,16 @@ class MAVInclude(object):
         """
         
         self.filename = filename
-        self.name , _ = os.path.splitext( os.path.basename( self.filename ) )
-        self.package_name =generate_pkg_name(self.name)  
-        self.messages=[]
-        self.enums=[]
+        self.name , _ = os.path.splitext(os.path.basename(self.filename))
+        self.package_name = generate_pkg_name(self.name)  
+        self.messages = []
+        self.enums = []
 
 class MAVMessage(object):
     """
     """
     
-    def __init__(self, name, msgid, package_name,desc=None):
+    def __init__(self, name, msgid, package_name, desc=None):
         """
         """
         self.name = name

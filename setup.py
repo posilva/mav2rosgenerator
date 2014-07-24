@@ -7,11 +7,11 @@ from distutils.core import setup
 
 setup(
     name='mav2rosgenerator',
-    version='0.1.4',
+    version='0.1.7',
     author='Pedro Marques da Silva',
     author_email='posilva@gmail.com',
     packages=['mav2ros', 'mav2ros.test'],
-    scripts=[],
+    scripts=['bin/run_mav2ros.py'],
     url='http://pypi.python.org/pypi/mav2rosgenerator/',
     license='LICENSE.txt',
     description='A Mavlink protocol to ROS API Generator.',
