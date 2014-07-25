@@ -5,7 +5,7 @@
 
 import rospy
 import serial
-from mavlink_ardupilotmega.msg import MAV_RAW
+from mavlink_ardupilotmega.msg import MAV_RAW_DATA
 
 #===============================================================================
 # 
@@ -25,12 +25,12 @@ def to_mav_raw_callback(message):
 def node():
     rospy.init_node('mavlink_device_node', anonymous=True)
     
-    pub = rospy.Publisher('/from_mav_raw', MAV_RAW, queue_size=10)
-    rospy.Subscriber("/to_mav_raw", MAV_RAW, to_mav_raw_callback,queue_size=10)
+    pub = rospy.Publisher('/from_mav_mav_raw_data', MAV_RAW_DATA, queue_size=10)
+    rospy.Subscriber("/to_mav_mav_raw_data", MAV_RAW_DATA, to_mav_raw_callback,queue_size=10)
     
     r = rospy.Rate(100) # 100hz
     
-    m = MAV_RAW()
+    m = MAV_RAW_DATA()
     m.channel=0
     
     while not rospy.is_shutdown():

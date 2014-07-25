@@ -4,7 +4,14 @@ Created on Jul 17, 2014
 @author: posilva
 '''
 #===============================================================================
-# Constants
+# Constant variables
+#===============================================================================
+MAV_RAW_DATA_MSG = "MAV_RAW_DATA"
+PACKAGE_VERSION="0.1.8"
+
+
+#===============================================================================
+# Constants for place holders
 #===============================================================================
 PKG_NAME_PLACEHOLDER = "$PACKAGE_NAME$"
 PKG_DEFINITIONS_NAME_PLACEHOLDER = "$PACKAGE_DEFINITIONS_NAME$"
@@ -78,7 +85,7 @@ cmake_node_template = """
 package_xml_template = """<?xml version="1.0"?>
 <package>
     <name>$PACKAGE_NAME$</name>
-    <version>0.0.1</version>
+    <version>"""+PACKAGE_VERSION+"""</version>
     <description>Mavlink generated messages for package $PACKAGE_NAME$</description>
     <maintainer email="posilva@academiafa.edu.pt">Pedro Marque da Silva</maintainer>
     <license>MIT</license>
@@ -119,8 +126,8 @@ ros_node_template = """
 mavlink_message_t mav_msg;                  //! Global mavlink message 
 mavlink_status_t status;                //! Global mavlink status    
 
-ros::Publisher  to_mav_raw_publisher;        //! ROS publisher to write to mavlink interface
-ros::Subscriber from_mav_raw_subscriber;     //! ROS subscriber to read from mavlink interface
+ros::Publisher  to_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_publisher;        //! ROS publisher to write to mavlink interface
+ros::Subscriber from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_subscriber;     //! ROS subscriber to read from mavlink interface
 
 $NODE_PUBLISHERS_DECL$
 
@@ -129,12 +136,12 @@ $NODE_PUBLISHERS_DECL$
  **/
 int write_to_mav (uint8_t * b, int sz){
 
-    $PACKAGE_NAME$::MAV_RAW m;
+    $PACKAGE_NAME$::""" +MAV_RAW_DATA_MSG +""" m;
     
-    m.channel=$PACKAGE_NAME$::MAV_RAW::CH_COMM0;
+    m.channel=$PACKAGE_NAME$::""" +MAV_RAW_DATA_MSG +"""::CH_COMM0;
     m.data.assign(b, b+sz);
     int rc = m.data.size();
-    to_mav_raw_publisher.publish(m);
+    to_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_publisher.publish(m);
     ROS_INFO("Writen to MAV %d bytes",rc);
     return rc;
 }        
@@ -144,9 +151,9 @@ $NODE_MESSAGES_CALLBACKS$
 /**
  *
  */            
-void from_mav_raw_callback(const $PACKAGE_NAME$::MAV_RAW::ConstPtr& msg)
+void from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_callback(const $PACKAGE_NAME$::""" +MAV_RAW_DATA_MSG +"""::ConstPtr& msg)
 {
-    ROS_INFO("[$PACKAGE_NAME$] Received a  'from_mav_raw_callback request");
+    ROS_INFO("[$PACKAGE_NAME$] Received a  'from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_callback request");
     
     for (int i = 0;i<msg->data.size();++i){
         // Try to get a new message
@@ -170,8 +177,8 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
     ros::Rate loop_rate(100);
 
-    to_mav_raw_publisher     = n.advertise<$PACKAGE_NAME$::MAV_RAW>("/to_mav_raw", 10);
-    from_mav_raw_subscriber  = n.subscribe("/from_mav_raw", 10, from_mav_raw_callback);
+    to_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_publisher     = n.advertise<$PACKAGE_NAME$::""" +MAV_RAW_DATA_MSG +""">("/to_mav_""" +MAV_RAW_DATA_MSG.lower() +"""", 10);
+    from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_subscriber  = n.subscribe("/from_mav_""" +MAV_RAW_DATA_MSG +"""", 10, from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_callback);
 
     /**
      * Messages Publishers Initialization
@@ -249,3 +256,4 @@ publisher_init_template = """\tfrom_mav_$NODE_MESSAGE_NAME_LOWER$_pub = n.advert
 #===============================================================================
 subscriber_decl_template = """\tros::Subscriber to_mav_$NODE_MESSAGE_NAME_LOWER$_sub = n.subscribe("/to_mav_$NODE_MESSAGE_NAME_LOWER$", 10, to_mav_$NODE_MESSAGE_NAME_LOWER$_callback);
 """
+

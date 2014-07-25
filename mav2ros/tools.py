@@ -106,7 +106,7 @@ class ROSPackageGenerator(object):
 
         raw_message=""
         if (include_node):
-            raw_message="MAV_RAW.msg"    
+            raw_message=MAV_RAW_DATA_MSG+".msg"    
         cmakelists = cmakelists_template.replace(CMAKE_PKG_ADD_MESSAGE_PLACEHOLDER, self.__gen_cmake_add_messages()).\
                                   replace(CMAKE_PKG_ADD_RAW_MESSAGE_PLACEHOLDER, raw_message).\
                                   replace(CMAKE_PKG_ADD_NODE_PLACEHOLDER, self.__gen_cmake_node(include_node)).\
@@ -146,7 +146,7 @@ class ROSAPIGenerator(object):
         for message in (self.mav_generator.parser.messages + self.mav_generator.parser.enums):
             header_file += "#include <" + self.mav_generator.package_name + os.sep + message.name + ".h>" + os.linesep
 
-        header_file += "#include <" + self.mav_generator.package_name + os.sep + "MAV_RAW.h>" + os.linesep
+        header_file += "#include <" + self.mav_generator.package_name + os.sep + MAV_RAW_DATA_MSG+".h>" + os.linesep
         header_file += "#endif // " + include_guard + os.linesep
         return header_file
     
@@ -241,7 +241,7 @@ class ROSAPIGenerator(object):
     
     def generate(self):
         
-        filename = self.mav_generator.msg_dir + os.sep +"MAV_RAW.msg"
+        filename = self.mav_generator.msg_dir + os.sep +MAV_RAW_DATA_MSG+".msg"
         generate_file(filename, mav_raw_message_template)
         
         header_name = "mavlink2ros"
