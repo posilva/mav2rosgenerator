@@ -9,6 +9,9 @@ This is a python package that enable us to create a entire Mavlink API under ROS
 * Generate a node with callbacks, subscribers and callbacks and a socket client to enable to connect to the ardupilot SITL for testing purposes. 
 * Generate the mavlink code based on the definition file ready to be used by the generated package
 
+## Distribution
+
+* The generated code for ardupilot mega ROS Node Driver is [here] ( https://github.com/posilva/ardupilotmega-ros)
 ## Installation 
 
 * Install python-pip ie: sudo apt-get install python-pip
