@@ -9,7 +9,7 @@ from mav2ros.tools import *
 class TestMAV2ROSGenerator(unittest.TestCase):
     def test_mavgenerator(self):
         definitions_file = '/home/posilva/Sistema/Develop/libs/mavlink-1.0.11/message_definitions/v1.0/ardupilotmega.xml'
-        output_dir = '/home/posilva/Sistema/Develop/projects/github/mav2rosgenerator/ardupilotmega-ros-pkg-generated'
+        output_dir = '/home/posilva/Sistema/Develop/projects/github/ardupilotmega-ros'
 
         generator = MAVGenerator(definitions_file, output_dir)
         generator.generate(True, True);
