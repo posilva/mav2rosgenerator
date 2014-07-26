@@ -380,6 +380,8 @@ class MAVGenerator(object):
         # force path creation
         mk_dirs(self.package_dir)
         mk_dirs(self.include_dir)
+        # to avoid ROS catkin compilation error if the include folder is empty
+        generate_file(self.include_dir + os.sep + ".keep","" ) 
         mk_dirs(self.source_dir)
         mk_dirs(self.msg_dir)
         # create parser instance

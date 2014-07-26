@@ -4,3 +4,5 @@ v0.1.2, 2014/07/17 -- Fix readme file to give some instruction .
 v0.1.5, 2014/07/24 -- Added MAV_RAW messages to enable full transparency of the ROS API
 v0.1.6  2014/07/24 -- Added Script run_mav2ros.py to pypi
 v0.1.7  2014/07/24 -- Fix exception message, added comments to examples
+v0.1.9  2014/07/26 -- Add to cmake list install binary directive
+v0.1.10 2014/07/27 -- Avoid creation of empty 'include' folder because catkin compilation error
