@@ -7,9 +7,7 @@ Created on Jul 17, 2014
 # Constant variables
 #===============================================================================
 MAV_RAW_DATA_MSG = "MAV_RAW_DATA"
-PACKAGE_VERSION="0.1.8"
-
-
+PACKAGE_VERSION="0.1.9"
 #===============================================================================
 # Constants for place holders
 #===============================================================================
@@ -78,6 +76,12 @@ cmake_node_template = """
     add_executable($PACKAGE_NAME$_node src/$PACKAGE_NAME$_node.cpp)
     target_link_libraries($PACKAGE_NAME$_node ${catkin_LIBRARIES})
     add_dependencies($PACKAGE_NAME$_node  $PACKAGE_NAME$_generate_messages_cpp)
+    
+install(TARGETS $PACKAGE_NAME$_node
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 """
 #===============================================================================
 # package.xml template
@@ -87,7 +91,7 @@ package_xml_template = """<?xml version="1.0"?>
     <name>$PACKAGE_NAME$</name>
     <version>"""+PACKAGE_VERSION+"""</version>
     <description>Mavlink generated messages for package $PACKAGE_NAME$</description>
-    <maintainer email="posilva@academiafa.edu.pt">Pedro Marque da Silva</maintainer>
+    <maintainer email="posilva@gmail.com">Pedro Marque da Silva</maintainer>
     <license>MIT</license>
     
     <author email="posilva@academiafa.edu.pt">Pedro Marques da Silva</author>
@@ -193,7 +197,6 @@ $NODE_SUBSCRIBERS_DECL$
     return 0;
 }
 """
-
 
 #===============================================================================
 # ROS messages callback template
