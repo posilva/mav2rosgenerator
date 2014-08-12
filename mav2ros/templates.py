@@ -182,7 +182,7 @@ int main(int argc, char **argv)
     ros::Rate loop_rate(100);
 
     to_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_publisher     = n.advertise<$PACKAGE_NAME$::""" +MAV_RAW_DATA_MSG +""">("/to_mav_""" +MAV_RAW_DATA_MSG.lower() +"""", 10);
-    from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_subscriber  = n.subscribe("/from_mav_""" +MAV_RAW_DATA_MSG +"""", 10, from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_callback);
+    from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_subscriber  = n.subscribe("/from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""", 10, from_mav_""" +MAV_RAW_DATA_MSG.lower() +"""_callback);
 
     /**
      * Messages Publishers Initialization
